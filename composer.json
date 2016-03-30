@@ -19,5 +19,6 @@
             "src",
             "libraries/AliMNS/Client.php"
         ]
-    }
+    },
+    "minimum-stability": "dev"
 }
