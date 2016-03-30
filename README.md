@@ -26,7 +26,7 @@
 	),
 	```
 
-3. 新增阿里云mns配置
+3. 新增阿里云mns配置 config/mns.php:
 
 	```
 	return [
@@ -49,6 +49,8 @@
 	});
 	```
 
-5. 正常使用Laravel Queue 即可
+5. 正常使用Laravel Queue 即可:
+	[https://laravel.com/docs/5.2/queues](https://laravel.com/docs/5.2/queues)
+
 
 
