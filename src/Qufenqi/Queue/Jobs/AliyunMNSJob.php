@@ -1,4 +1,4 @@
-<?php namespace Qfq\Queue\Jobs;
+<?php namespace Qufenqi\Queue\Jobs;
 
 use Closure;
 use Illuminate\Container\Container;

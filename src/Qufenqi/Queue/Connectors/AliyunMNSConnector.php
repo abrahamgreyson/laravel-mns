@@ -1,6 +1,6 @@
-<?php namespace Qfq\Queue\Connectors;
+<?php namespace Qufenqi\Queue\Connectors;
 
-use Qfq\Queue\AliyunMNSQueue;
+use Qufenqi\Queue\AliyunMNSQueue;
 use Illuminate\Queue\Connectors\ConnectorInterface;
 
 class AliyunMNSConnector implements ConnectorInterface {

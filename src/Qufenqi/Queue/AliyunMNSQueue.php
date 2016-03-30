@@ -1,4 +1,4 @@
-<?php namespace Qfq\Queue;
+<?php namespace Qufenqi\Queue;
 
 use Illuminate\Queue\Queue;
 use Illuminate\Queue\QueueInterface;
