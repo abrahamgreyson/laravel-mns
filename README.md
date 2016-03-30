@@ -4,9 +4,11 @@
 # 使用步骤
 
 1. composer require qufenqi/aliyun_mns:dev-master
+
 2. 修改 config/queue.php， 新增mns配置:
 
-	```'connections' => array(
+	```
+    'connections' => array(
 
 		'sync' => array(
 			'driver' => 'sync',
