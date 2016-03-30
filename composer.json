@@ -1,5 +1,6 @@
 {
     "name": "qufenqi/aliyun_mns",
+    "type": "library",
     "description": "Laravel queue driver base on Aliyun Message Service.",
     "authors": [
         {
