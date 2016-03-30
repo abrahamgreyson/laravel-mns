@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "laravel/framework": ">=4.2.*"
+        "laravel/framework": ">=4.2.1"
     },
     "autoload": {
         "classmap": [
