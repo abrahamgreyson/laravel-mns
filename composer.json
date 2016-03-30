@@ -20,5 +20,5 @@
             "libraries/AliMNS/Client.php"
         ]
     },
-    "minimum-stability": "dev-master"
+    "minimum-stability": "dev"
 }
