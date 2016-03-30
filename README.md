@@ -1,1 +1,3 @@
 # aliyun_mns
+这个包的目的不是为了封装阿里云官方的MNS sdk，而是为了给laravel提供基于MNS的队列驱动，让现有的使用laravel队列的程序可以方便的切换到阿里云MNS上。
+
