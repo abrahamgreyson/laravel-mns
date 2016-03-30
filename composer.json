@@ -9,14 +9,12 @@
         }
     ],
     "require": {
-        "laravel/framework": "5.2.*"
+        "laravel/framework": ">=4.2.*"
     },
     "autoload": {
         "classmap": [
-            "/"
-        ],
-        "exclude-from-classmap": [
-            "/libraries/AliMNS/lib/"
+            "vendor/qufenqi/aliyun_mns/src",
+            "vendor/qufenqi/aliyun_mns/libraries/AliMNS/Client.php"
         ]
     }
 }
