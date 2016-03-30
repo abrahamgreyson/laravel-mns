@@ -13,8 +13,8 @@
     },
     "autoload": {
         "classmap": [
-            "vendor/qufenqi/aliyun_mns/src",
-            "vendor/qufenqi/aliyun_mns/libraries/AliMNS/Client.php"
+            "src",
+            "libraries/AliMNS/Client.php"
         ]
     }
 }
