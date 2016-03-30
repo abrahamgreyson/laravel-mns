@@ -1,0 +1,11 @@
+{
+    "name": "qufenqi/aliyun_mns",
+    "description": "Laravel queue driver base on Aliyun Message Service.",
+    "authors": [
+        {
+            "name": "chunfang",
+            "email": "xuchunfang@qufenqi.com"
+        }
+    ],
+    "require": {}
+}
