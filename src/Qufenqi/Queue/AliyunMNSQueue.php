@@ -1,11 +1,11 @@
 <?php namespace Qufenqi\Queue;
 
 use Illuminate\Queue\Queue;
-use Illuminate\Queue\QueueInterface;
+use Illuminate\Contracts\Queue\Job as JobContract;
 use AliMNS\Client;
 use Config;
 
-class AliyunMNSQueue extends Queue implements QueueInterface {
+class AliyunMNSQueue extends Queue implements JobContract {
 
     private $client;
     private $queueMap;

@@ -3,8 +3,9 @@
 use Closure;
 use Illuminate\Container\Container;
 use Illuminate\Queue\Jobs\Job;
+use Illuminate\Contracts\Queue\Job as JobContract;
 
-class AliyunMNSJob extends Job {
+class AliyunMNSJob extends Job implements JobContract {
 
 	/**
 	 * The class name of the job.
