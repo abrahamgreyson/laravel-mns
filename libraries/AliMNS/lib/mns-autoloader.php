@@ -141,6 +141,9 @@ spl_autoload_register(function ($class) use ($mapping) {
     }
 }, true);
 
-require __DIR__ . '/GuzzleHttp/functions.php';
-require __DIR__ . '/GuzzleHttp/Psr7/functions.php';
-require __DIR__ . '/GuzzleHttp/Promise/functions.php';
+// 防止组件间同时使用GuzzleHttp导致冲突
+if (!function_exists('GuzzleHttp\uri_template')) {
+    require __DIR__ . '/GuzzleHttp/functions.php';
+    require __DIR__ . '/GuzzleHttp/Psr7/functions.php';
+    require __DIR__ . '/GuzzleHttp/Promise/functions.php';
+}

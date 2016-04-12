@@ -1,7 +1,6 @@
 {
     "name": "qufenqi/aliyun_mns",
     "type": "library",
-    "version": "0.0.1",
     "description": "Laravel queue driver bases on Aliyun Message Service.",
 	"keywords": ["aliyun", "laravel", "qufenqi"],
 	"license": "MIT",
