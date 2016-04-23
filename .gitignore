@@ -1,3 +1,19 @@
-/vendor/
+# Finder
 ._.DS_Store
 .DS_Store
+
+# PHPStorm
+.idea
+
+# Composer vendor
+/vendor
+
+# Node Module
+/node_modules
+
+# Configuration file
+.env
+
+# IDE helper
+_ide_helper.php
+.phpstorm.meta.php
