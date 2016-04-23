@@ -1,24 +1,28 @@
 {
-    "name": "qufenqi/aliyun_mns",
-    "type": "library",
-    "version": "1.0.2",
-    "description": "Laravel queue driver bases on Aliyun Message Service.",
-	"keywords": ["aliyun", "laravel", "qufenqi"],
-	"license": "MIT",
-    "authors": [
-        {
-            "name": "chunfang",
-            "email": "xuchunfang@qufenqi.com"
-        }
-    ],
-    "require": {
-        "laravel/framework": ">=5.0.1"
-    },
-    "autoload": {
-        "classmap": [
-            "src",
-            "libraries/AliMNS/Client.php"
-        ]
-    },
-    "minimum-stability": "dev"
+  "name": "qufenqi/aliyun_mns",
+  "type": "library",
+  "version": "1.0.2",
+  "description": "Laravel queue driver bases on Aliyun Message Service.",
+  "keywords": [
+    "aliyun",
+    "laravel",
+    "qufenqi"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "chunfang",
+      "email": "xuchunfang@qufenqi.com"
+    }
+  ],
+  "require": {
+    "laravel/framework": ">=5.0.1"
+  },
+  "autoload": {
+    "psr4": {
+      "AliyunMNS\\": "lib/AliyunMNS/",
+      "Qufenqi\\Queue\\": "src/Qufenqi/Queue/"
+    }
+  },
+  "minimum-stability": "dev"
 }

@@ -2,7 +2,6 @@
 
 use Illuminate\Queue\Queue;
 use Illuminate\Contracts\Queue\Queue as QueueContract;
-use AliMNS\Client;
 use Config;
 
 class AliyunMNSQueue extends Queue implements QueueContract
