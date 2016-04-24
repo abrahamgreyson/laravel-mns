@@ -1,7 +1,5 @@
 {
     "name": "qufenqi/aliyun_mns",
-    "type": "library",
-    "version": "1.0.2",
     "description": "Laravel queue driver bases on Aliyun Message Service.",
     "keywords": [
         "aliyun",
@@ -22,7 +20,7 @@
         "mockery/mockery": "~0.9.4"
     },
     "autoload": {
-        "psr4": {
+        "psr-4": {
             "AliyunMNS\\": "lib/AliyunMNS/",
             "Qufenqi\\Queue\\": "src/Qufenqi/Queue/"
         }
