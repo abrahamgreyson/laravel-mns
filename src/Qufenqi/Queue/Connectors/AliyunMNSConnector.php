@@ -17,10 +17,9 @@ class AliyunMNSConnector implements ConnectorInterface
     public function connect(array $config)
     {
         $config = Config::get('queue.connections.mns');
-
         return new AliyunMNSQueue(
             new MnsClient($config['endpoint'], $config['key'], $config['secret']),
-            $config['default']
+            $config['queue']
         );
     }
 }
