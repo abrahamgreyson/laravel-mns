@@ -43,10 +43,16 @@ use AliyunMNS\Client as MnsClient;
 class MnsAdapter
 {
     /**
+     * @var string 适配的阿里云消息服务 SDK 版本，仅用作记录。
+     * @see https://help.aliyun.com/document_detail/mns/sdk/php-sdk.html
+     */
+    const ADAPTER_TO_ALIYUN_MNS_SDK_VERSION = '1.3.0@2016-02-25';
+
+    /**
      * @var MnsClient
      */
     private $client;
-    
+
     /**
      * @var \AliyunMNS\Queue
      */
