@@ -6,7 +6,7 @@ use Illuminate\Queue\Queue;
 use Illuminate\Contracts\Queue\Queue as QueueContract;
 use Qufenqi\Queue\Jobs\AliyunMNSJob;
 
-class AliyunMNSQueue extends Queue implements QueueContract
+class MnsQueue extends Queue implements QueueContract
 {
     /**
      * @var MnsAdapter
@@ -104,6 +104,6 @@ class AliyunMNSQueue extends Queue implements QueueContract
 
     protected function resolveJob($job)
     {
-        return new Jobs\AliyunMNSJob($this->container, $job, $this->client);
+        return new Jobs\Mnsjob($this->container, $job, $this->client);
     }
 }

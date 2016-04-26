@@ -1,12 +1,11 @@
 <?php namespace Qufenqi\Queue\Jobs;
 
 use AliyunMNS\Client as MnsClient;
-use Closure;
 use Illuminate\Container\Container;
 use Illuminate\Queue\Jobs\Job;
 use Illuminate\Contracts\Queue\Job as JobContract;
 
-class AliyunMNSJob extends Job implements JobContract
+class MnsJob extends Job implements JobContract
 {
     /**
      * The class name of the job.
