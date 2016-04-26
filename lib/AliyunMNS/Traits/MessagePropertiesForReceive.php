@@ -15,9 +15,9 @@ trait MessagePropertiesForReceive
         return $this->receiptHandle;
     }
 
-    public function readMessagePropertiesForReceiveXML(\XMLReader $xmlReader)
+    public function readMessagePropertiesForReceiveXML(\XMLReader $xmlReader, $base64)
     {
-        $message = Message::fromXML($xmlReader);
+        $message = Message::fromXML($xmlReader, $base64);
         $this->messageId = $message->getMessageId();
         $this->messageBodyMD5 = $message->getMessageBodyMD5();
         $this->messageBody = $message->getMessageBody();

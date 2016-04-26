@@ -42,7 +42,7 @@ class ChangeMessageVisibilityResponse extends BaseResponse
         $xmlReader = new \XMLReader();
         try {
             $xmlReader->XML($content);
-            $message = Message::fromXML($xmlReader);
+            $message = Message::fromXML($xmlReader, TRUE);
             $this->receiptHandle = $message->getReceiptHandle();
             $this->nextVisibleTime = $message->getNextVisibleTime();
         } catch (\Exception $e) {

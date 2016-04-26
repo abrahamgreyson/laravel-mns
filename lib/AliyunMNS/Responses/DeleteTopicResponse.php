@@ -5,7 +5,7 @@ use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 
-class DeleteQueueResponse extends BaseResponse
+class DeleteTopicResponse extends BaseResponse
 {
     public function __construct()
     {

@@ -1,10 +1,21 @@
 <?php
+
+/*
+ * Laravel-Mns -- 阿里云消息队列（MNS）的 Laravel 适配。
+ *
+ * (c) Abraham Greyson <82011220@qq.com>
+ *
+ * @link: https://github.com/AbrahamGreyson/laravel-mns
+ *
+ * @license: MIT
+ */
+
 namespace Qufenqi\Queue;
 
 use AliyunMNS\Client as MnsClient;
 
 /**
- * Class MnsAdapter
+ * Class MnsAdapter.
  *
  * @method string getQueueName()
  * @method \AliyunMNS\Responses\SetQueueAttributeResponse setAttribute(\AliyunMNS\Model\QueueAttributes $attributes)
@@ -28,8 +39,6 @@ use AliyunMNS\Client as MnsClient;
  * @method \AliyunMNS\Responses\MnsPromise batchPeekMessageAsync(\AliyunMNS\Requests\BatchPeekMessageRequest $request, \AliyunMNS\AsyncCallback $callback = null)
  * @method \AliyunMNS\Responses\BatchDeleteMessageResponse batchDeleteMessage(\AliyunMNS\Requests\BatchDeleteMessageRequest $request)
  * @method \AliyunMNS\Responses\MnsPromise batchDeleteMessageAsync(\AliyunMNS\Requests\BatchDeleteMessageRequest $request, \AliyunMNS\AsyncCallback $callback = null)
- *
- * @package  Qufenqi\Queue
  */
 class MnsAdapter
 {
@@ -37,18 +46,18 @@ class MnsAdapter
      * @var MnsClient
      */
     private $client;
-
+    
     /**
      * @var \AliyunMNS\Queue
      */
     private $queue;
-
+    
     public function __construct(MnsClient $client, $queueName)
     {
         $this->client = $client;
         $this->setQueue($queueName);
     }
-
+    
     /**
      * 转化 \AliyunMNS\Client 对象，
      * 可以通过本对象直接访问（而无需通过 \AliyunMNS\Client 对象构建）。
@@ -62,7 +71,7 @@ class MnsAdapter
     {
         return call_user_func_array([$this->queue, $method], $parameters);
     }
-
+    
     /**
      * 将适配队列设定为特定队列。
      *
@@ -73,7 +82,7 @@ class MnsAdapter
     public function setQueue($queue)
     {
         $this->queue = $this->client->getQueueRef($queue);
-
+        
         return $this;
     }
 }

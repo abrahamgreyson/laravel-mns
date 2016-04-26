@@ -5,14 +5,14 @@ use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 
-class ListQueueResponse extends BaseResponse
+class ListSubscriptionResponse extends BaseResponse
 {
-    private $queueNames;
+    private $SubscriptionNames;
     private $nextMarker;
 
     public function __construct()
     {
-        $this->queueNames = array();
+        $this->SubscriptionNames = array();
         $this->nextMarker = NULL;
     }
 
@@ -21,9 +21,9 @@ class ListQueueResponse extends BaseResponse
         return $this->nextMarker == NULL;
     }
 
-    public function getQueueNames()
+    public function getSubscriptionNames()
     {
-        return $this->queueNames;
+        return $this->SubscriptionNames;
     }
 
     public function getNextMarker()
@@ -48,12 +48,12 @@ class ListQueueResponse extends BaseResponse
                 if ($xmlReader->nodeType == \XMLReader::ELEMENT)
                 {
                     switch ($xmlReader->name) {
-                    case 'QueueURL':
+                    case 'SubscriptionURL':
                         $xmlReader->read();
                         if ($xmlReader->nodeType == \XMLReader::TEXT)
                         {
-                            $queueName = $this->getQueueNameFromQueueURL($xmlReader->value);
-                            $this->queueNames[] = $queueName;
+                            $subscriptionName = $this->getSubscriptionNameFromSubscriptionURL($xmlReader->value);
+                            $this->SubscriptionNames[] = $subscriptionName;
                         }
                         break;
                     case 'NextMarker':
@@ -66,19 +66,23 @@ class ListQueueResponse extends BaseResponse
                     }
                 }
             }
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e)
+        {
             throw new MnsException($statusCode, $e->getMessage(), $e);
-        } catch (\Throwable $t) {
+        }
+        catch (\Throwable $t)
+        {
             throw new MnsException($statusCode, $t->getMessage());
         }
     }
 
-    private function getQueueNameFromQueueURL($queueURL)
+    private function getSubscriptionNameFromSubscriptionURL($subscriptionURL)
     {
-        $pieces = explode("/", $queueURL);
-        if (count($pieces) == 5)
+        $pieces = explode("/", $subscriptionURL);
+        if (count($pieces) == 7)
         {
-            return $pieces[4];
+            return $pieces[6];
         }
         return "";
     }
@@ -87,23 +91,31 @@ class ListQueueResponse extends BaseResponse
     {
         $this->succeed = FALSE;
         $xmlReader = new \XMLReader();
-        try {
+        try
+        {
             $xmlReader->XML($content);
             $result = XMLParser::parseNormalError($xmlReader);
 
             throw new MnsException($statusCode, $result['Message'], $exception, $result['Code'], $result['RequestId'], $result['HostId']);
-        } catch (\Exception $e) {
-            if ($exception != NULL) {
+        }
+        catch (\Exception $e)
+        {
+            if ($exception != NULL)
+            {
                 throw $exception;
-            } elseif($e instanceof MnsException) {
+            }
+            elseif ($e instanceof MnsException)
+            {
                 throw $e;
-            } else {
+            }
+            else
+            {
                 throw new MnsException($statusCode, $e->getMessage());
             }
-        } catch (\Throwable $t) {
+        }
+        catch (\Throwable $t)
+        {
             throw new MnsException($statusCode, $t->getMessage());
         }
     }
 }
-
-?>

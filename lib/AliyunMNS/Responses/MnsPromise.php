@@ -38,7 +38,6 @@ class MnsPromise
             }
         } catch (TransferException $e) {
             $message = $e->getMessage();
-            var_dump($message); exit;
             if ($e->hasResponse()) {
                 $message = $e->getResponse()->getBody();
             }

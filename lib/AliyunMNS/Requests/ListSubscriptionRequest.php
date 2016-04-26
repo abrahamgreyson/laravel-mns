@@ -3,19 +3,30 @@ namespace AliyunMNS\Requests;
 
 use AliyunMNS\Requests\BaseRequest;
 
-class ListQueueRequest extends BaseRequest
+class ListSubscriptionRequest extends BaseRequest
 {
+    private $topicName;
     private $retNum;
     private $prefix;
     private $marker;
 
-    public function __construct($retNum = NULL, $prefix = NULL, $marker = NULL)
+    public function __construct(
+        $topicName,
+        $retNum = NULL,
+        $prefix = NULL,
+        $marker = NULL)
     {
-        parent::__construct('get', 'queues');
+        parent::__construct('get', 'topics/' . $topicName . '/subscriptions');
 
+        $this->topicName = $topicName;
         $this->setRetNum($retNum);
         $this->setPrefix($prefix);
         $this->setMarker($marker);
+    }
+    
+    public function getTopicName()
+    {
+        return $this->topicName;
     }
 
     public function getRetNum()

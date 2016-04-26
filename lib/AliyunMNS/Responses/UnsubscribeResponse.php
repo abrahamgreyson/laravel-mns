@@ -5,7 +5,7 @@ use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Responses\BaseResponse;
 use AliyunMNS\Common\XMLParser;
 
-class DeleteQueueResponse extends BaseResponse
+class UnsubscribeResponse extends BaseResponse
 {
     public function __construct()
     {
@@ -14,9 +14,12 @@ class DeleteQueueResponse extends BaseResponse
     public function parseResponse($statusCode, $content)
     {
         $this->statusCode = $statusCode;
-        if ($statusCode == 204) {
+        if ($statusCode == 204)
+        {
             $this->succeed = TRUE;
-        } else {
+        }
+        else
+        {
             $this->parseErrorResponse($statusCode, $content);
         }
     }

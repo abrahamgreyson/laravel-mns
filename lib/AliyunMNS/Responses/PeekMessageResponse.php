@@ -13,8 +13,22 @@ class PeekMessageResponse extends BaseResponse
 {
     use MessagePropertiesForPeek;
 
-    public function __construct()
+    // boolean, whether the message body will be decoded as base64
+    private $base64;
+
+    public function __construct($base64 = TRUE)
     {
+        $this->base64 = $base64;
+    }
+
+    public function setBase64($base64)
+    {
+        $this->base64 = $base64;
+    }
+
+    public function isBase64()
+    {
+        return ($this->base64 == TRUE);
     }
 
     public function parseResponse($statusCode, $content)
@@ -29,7 +43,7 @@ class PeekMessageResponse extends BaseResponse
         $xmlReader = new \XMLReader();
         try {
             $xmlReader->XML($content);
-            $this->readMessagePropertiesForPeekXML($xmlReader);
+            $this->readMessagePropertiesForPeekXML($xmlReader, $this->base64);
         } catch (\Exception $e) {
             throw new MnsException($statusCode, $e->getMessage(), $e);
         } catch (\Throwable $t) {

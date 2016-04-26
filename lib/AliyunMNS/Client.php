@@ -11,6 +11,12 @@ use AliyunMNS\Requests\ListQueueRequest;
 use AliyunMNS\Responses\ListQueueResponse;
 use AliyunMNS\Requests\DeleteQueueRequest;
 use AliyunMNS\Responses\DeleteQueueResponse;
+use AliyunMNS\Requests\CreateTopicRequest;
+use AliyunMNS\Responses\CreateTopicResponse;
+use AliyunMNS\Requests\DeleteTopicRequest;
+use AliyunMNS\Responses\DeleteTopicResponse;
+use AliyunMNS\Requests\ListTopicRequest;
+use AliyunMNS\Responses\ListTopicResponse;
 
 /**
  * Please refer to
@@ -29,13 +35,14 @@ class Client
      *               accountId could be found in aliyun.com
      * @param accessId: accessId from aliyun.com
      * @param accessKey: accessKey from aliyun.com
+     * @param securityToken: securityToken from aliyun.com
      * @param config: necessary configs
      */
     public function __construct($endPoint, $accessId,
-        $accessKey, Config $config = NULL)
+        $accessKey, $securityToken = NULL, Config $config = NULL)
     {
         $this->client = new HttpClient($endPoint, $accessId,
-            $accessKey, $config);
+            $accessKey, $securityToken, $config);
     }
 
     /**
@@ -43,12 +50,13 @@ class Client
      * this function does not create the queue automatically.
      *
      * @param string $queueName:  the queue name
+     * @param bool $base64: whether the message in queue will be base64 encoded
      *
      * @return Queue $queue: the Queue instance
      */
-    public function getQueueRef($queueName)
+    public function getQueueRef($queueName, $base64 = TRUE)
     {
-        return new Queue($this->client, $queueName);
+        return new Queue($this->client, $queueName, $base64);
     }
 
     /**
@@ -127,6 +135,65 @@ class Client
         $request = new DeleteQueueRequest($queueName);
         $response = new DeleteQueueResponse();
         return $this->client->sendRequestAsync($request, $response, $callback);
+    }
+
+    // API for Topic
+    /**
+     * Returns a topic reference for operating on the topic
+     * this function does not create the topic automatically.
+     *
+     * @param string $topicName:  the topic name
+     *
+     * @return Topic $topic: the Topic instance
+     */
+    public function getTopicRef($topicName)
+    {
+        return new Topic($this->client, $topicName);
+    }
+
+    /**
+     * Create Topic and Returns the Topic reference
+     *
+     * @param CreateTopicRequest $request:  the TopicName and TopicAttributes
+     *
+     * @return CreateTopicResponse $response: the CreateTopicResponse
+     *
+     * @throws TopicAlreadyExistException if topic already exists
+     * @throws InvalidArgumentException if any argument value is invalid
+     * @throws MnsException if any other exception happends
+     */
+    public function createTopic(CreateTopicRequest $request)
+    {
+        $response = new CreateTopicResponse($request->getTopicName());
+        return $this->client->sendRequest($request, $response);
+    }
+
+    /**
+     * Delete the specified topic
+     * the request will succeed even when the topic does not exist
+     *
+     * @param $topicName: the topicName
+     *
+     * @return DeleteTopicResponse
+     */
+    public function deleteTopic($topicName)
+    {
+        $request = new DeleteTopicRequest($topicName);
+        $response = new DeleteTopicResponse();
+        return $this->client->sendRequest($request, $response);
+    }
+
+    /**
+     * Query the topics created by current account
+     *
+     * @param ListTopicRequest $request: define filters for quering topics
+     *
+     * @return ListTopicResponse: the response containing topicNames
+     */
+    public function listTopic(ListTopicRequest $request)
+    {
+        $response = new ListTopicResponse();
+        return $this->client->sendRequest($request, $response);
     }
 }
 

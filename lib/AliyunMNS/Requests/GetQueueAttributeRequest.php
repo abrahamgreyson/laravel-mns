@@ -1,9 +1,7 @@
 <?php
 namespace AliyunMNS\Requests;
 
-use AliyunMNS\Constants;
 use AliyunMNS\Requests\BaseRequest;
-use AliyunMNS\Model\QueueAttributes;
 
 class GetQueueAttributeRequest extends BaseRequest
 {

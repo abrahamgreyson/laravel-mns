@@ -13,9 +13,23 @@ class BatchPeekMessageResponse extends BaseResponse
 {
     protected $messages;
 
-    public function __construct()
+    // boolean, whether the message body will be decoded as base64
+    protected $base64;
+
+    public function __construct($base64 = TRUE)
     {
         $this->messages = array();
+        $this->base64 = $base64;
+    }
+
+    public function setBase64($base64)
+    {
+        $this->base64 = $base64;
+    }
+
+    public function isBase64()
+    {
+        return ($this->base64 == TRUE);
     }
 
     public function getMessages()
@@ -40,7 +54,7 @@ class BatchPeekMessageResponse extends BaseResponse
                 if ($xmlReader->nodeType == \XMLReader::ELEMENT
                     && $xmlReader->name == 'Message')
                 {
-                    $this->messages[] = Message::fromXML($xmlReader);
+                    $this->messages[] = Message::fromXML($xmlReader, $this->base64);
                 }
             }
         } catch (\Exception $e) {

@@ -3,7 +3,7 @@ namespace AliyunMNS\Requests;
 
 use AliyunMNS\Requests\BaseRequest;
 
-class ListQueueRequest extends BaseRequest
+class ListTopicRequest extends BaseRequest
 {
     private $retNum;
     private $prefix;
@@ -11,7 +11,7 @@ class ListQueueRequest extends BaseRequest
 
     public function __construct($retNum = NULL, $prefix = NULL, $marker = NULL)
     {
-        parent::__construct('get', 'queues');
+        parent::__construct('get', 'topics');
 
         $this->setRetNum($retNum);
         $this->setPrefix($prefix);

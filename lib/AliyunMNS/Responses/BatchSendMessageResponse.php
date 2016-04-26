@@ -41,7 +41,7 @@ class BatchSendMessageResponse extends BaseResponse
             while ($xmlReader->read())
             {
                 if ($xmlReader->nodeType == \XMLReader::ELEMENT && $xmlReader->name == 'Message') {
-                    $sendMessageResponseItems[] = SendMessageResponseItem::fromXML($xmlReader);
+                    $this->sendMessageResponseItems[] = SendMessageResponseItem::fromXML($xmlReader);
                 }
             }
         } catch (\Exception $e) {

@@ -1,9 +1,21 @@
-<?php namespace Qufenqi\Queue\Jobs;
+<?php
+
+/*
+ * Laravel-Mns -- 阿里云消息队列（MNS）的 Laravel 适配。
+ *
+ * (c) Abraham Greyson <82011220@qq.com>
+ *
+ * @link: https://github.com/AbrahamGreyson/laravel-mns
+ *
+ * @license: MIT
+ */
+
+namespace Qufenqi\Queue\Jobs;
 
 use AliyunMNS\Client as MnsClient;
 use Illuminate\Container\Container;
-use Illuminate\Queue\Jobs\Job;
 use Illuminate\Contracts\Queue\Job as JobContract;
+use Illuminate\Queue\Jobs\Job;
 
 class MnsJob extends Job implements JobContract
 {
@@ -29,11 +41,10 @@ class MnsJob extends Job implements JobContract
     /**
      * Create a new job instance.
      *
-     * @param  \Illuminate\Container\Container $container
-     * @param  MnsClient                       $mns
-     * @param   string                         $queue
-     * @param  string                          $job
-     *
+     * @param \Illuminate\Container\Container $container
+     * @param MnsClient                       $mns
+     * @param string                          $queue
+     * @param string                          $job
      */
     public function __construct(Container $container, $mns, $queue, $job)
     {
@@ -45,8 +56,6 @@ class MnsJob extends Job implements JobContract
 
     /**
      * Fire the job.
-     *
-     * @return void
      */
     public function fire()
     {
@@ -71,8 +80,6 @@ class MnsJob extends Job implements JobContract
 
     /**
      * Delete the job from the queue.
-     *
-     * @return void
      */
     public function delete()
     {
@@ -83,9 +90,7 @@ class MnsJob extends Job implements JobContract
     /**
      * Release the job back into the queue.
      *
-     * @param  int $delay
-     *
-     * @return void
+     * @param int $delay
      */
     public function release($delay = 0)
     {

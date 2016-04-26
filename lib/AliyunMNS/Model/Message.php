@@ -21,7 +21,7 @@ class Message
         $this->receiptHandle = $receiptHandle;
     }
 
-    static public function fromXML(\XMLReader $xmlReader)
+    static public function fromXML(\XMLReader $xmlReader, $base64)
     {
         $messageId = NULL;
         $messageBodyMD5 = NULL;
@@ -57,7 +57,11 @@ class Message
                     $xmlReader->read();
                     if ($xmlReader->nodeType == \XMLReader::TEXT)
                     {
-                        $messageBody = base64_decode($xmlReader->value);
+                        if ($base64 == TRUE) {
+                            $messageBody = base64_decode($xmlReader->value);
+                        } else {
+                            $messageBody = $xmlReader->value;
+                        }
                     }
                     break;
                 case Constants::ENQUEUE_TIME:

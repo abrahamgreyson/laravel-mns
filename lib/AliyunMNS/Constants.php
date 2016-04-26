@@ -13,6 +13,10 @@ class Constants
     const AUTHORIZATION = "Authorization";
     const MNS = "MNS";
 
+    const CONTENT_LENGTH = "Content-Length";
+    const CONTENT_TYPE = "Content-Type";
+    const SECURITY_TOKEN = "security-token";
+
     // XML Tag
     const ERROR = "Error";
     const ERRORS = "Errors";
@@ -33,6 +37,9 @@ class Constants
     const DEQUEUE_COUNT = "DequeueCount";
     const ERROR_CODE = "ErrorCode";
     const ERROR_MESSAGE = "ErrorMessage";
+    const ENDPOINT = "Endpoint";
+    const STRATEGY = "NotifyStrategy";
+    const CONTENT_FORMAT = "NotifyContentFormat";
 
     // some MNS ErrorCodes
     const INVALID_ARGUMENT = "InvalidArgument";
@@ -43,6 +50,11 @@ class Constants
     const RECEIPT_HANDLE_ERROR = "ReceiptHandleError";
     const BATCH_SEND_FAIL = "BatchSendFail";
     const BATCH_DELETE_FAIL = "BatchDeleteFail";
+
+    const TOPIC_ALREADY_EXIST = "TopicAlreadyExist";
+    const TOPIC_NOT_EXIST = "TopicNotExist";
+    const SUBSCRIPTION_ALREADY_EXIST = "SubscriptionAlreadyExist";
+    const SUBSCRIPTION_NOT_EXIST = "SubscriptionNotExist";
 }
 
 ?>

@@ -18,9 +18,10 @@ class HttpClient
     private $client;
     private $accessId;
     private $accessKey;
+    private $securityToken;
 
     public function __construct($endPoint, $accessId,
-        $accessKey, Config $config = NULL)
+        $accessKey, $securityToken = NULL, Config $config = NULL)
     {
         if ($config == NULL)
         {
@@ -39,6 +40,7 @@ class HttpClient
                 'timeout' => $config->getRequestTimeout()
             ]
         ]);
+        $this->securityToken = $securityToken;
     }
 
     private function addRequiredHeaders(BaseRequest &$request)
@@ -51,14 +53,19 @@ class HttpClient
 
         if ($body != NULL)
         {
-            $request->setHeader('Content-Length', strlen($body));
+            $request->setHeader(Constants::CONTENT_LENGTH, strlen($body));
         }
         $request->setHeader('Date', gmdate(Constants::GMT_DATE_FORMAT));
-        if (!$request->isHeaderSet('Content-Type'))
+        if (!$request->isHeaderSet(Constants::CONTENT_TYPE))
         {
-            $request->setHeader('Content-Type', 'text/xml');
+            $request->setHeader(Constants::CONTENT_TYPE, 'text/xml');
         }
         $request->setHeader(Constants::MNS_VERSION_HEADER, Constants::MNS_VERSION);
+
+        if ($this->securityToken != NULL)
+        {
+            $request->setHeader(Constants::SECURITY_TOKEN, $this->securityToken);
+        }
 
         $sign = Signature::SignRequest($this->accessKey, $request);
         $request->setHeader(Constants::AUTHORIZATION,

@@ -21,7 +21,7 @@ trait MessageIdAndMD5
 
     public function readMessageIdAndMD5XML(\XMLReader $xmlReader)
     {
-        $message = Message::fromXML($xmlReader);
+        $message = Message::fromXML($xmlReader, TRUE);
         $this->messageId = $message->getMessageId();
         $this->messageBodyMD5 = $message->getMessageBodyMD5();
     }

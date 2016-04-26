@@ -46,9 +46,9 @@ trait MessagePropertiesForPeek
         return $this->priority;
     }
 
-    public function readMessagePropertiesForPeekXML(\XMLReader $xmlReader)
+    public function readMessagePropertiesForPeekXML(\XMLReader $xmlReader, $base64)
     {
-        $message = Message::fromXML($xmlReader);
+        $message = Message::fromXML($xmlReader, $base64);
         $this->messageId = $message->getMessageId();
         $this->messageBodyMD5 = $message->getMessageBodyMD5();
         $this->messageBody = $message->getMessageBody();

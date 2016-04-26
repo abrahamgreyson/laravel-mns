@@ -1,9 +1,21 @@
-<?php namespace Qufenqi\Queue;
+<?php
+
+/*
+ * Laravel-Mns -- 阿里云消息队列（MNS）的 Laravel 适配。
+ *
+ * (c) Abraham Greyson <82011220@qq.com>
+ *
+ * @link: https://github.com/AbrahamGreyson/laravel-mns
+ *
+ * @license: MIT
+ */
+
+namespace Qufenqi\Queue;
 
 use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Requests\SendMessageRequest;
-use Illuminate\Queue\Queue;
 use Illuminate\Contracts\Queue\Queue as QueueContract;
+use Illuminate\Queue\Queue;
 use Qufenqi\Queue\Jobs\AliyunMNSJob;
 
 class MnsQueue extends Queue implements QueueContract
@@ -28,9 +40,9 @@ class MnsQueue extends Queue implements QueueContract
     /**
      * Push a new job onto the queue.
      *
-     * @param  string $job
-     * @param  mixed  $data
-     * @param  string $queue
+     * @param string $job
+     * @param mixed  $data
+     * @param string $queue
      *
      * @return mixed
      */
@@ -44,9 +56,9 @@ class MnsQueue extends Queue implements QueueContract
     /**
      * Push a raw payload onto the queue.
      *
-     * @param  string $payload
-     * @param  string $queue
-     * @param  array  $options
+     * @param string $payload
+     * @param string $queue
+     * @param array  $options
      *
      * @return mixed
      */
@@ -62,10 +74,10 @@ class MnsQueue extends Queue implements QueueContract
     /**
      * Push a new job onto the queue after a delay.
      *
-     * @param  \DateTime|int $delay
-     * @param  string        $job
-     * @param  mixed         $data
-     * @param  string        $queue
+     * @param \DateTime|int $delay
+     * @param string        $job
+     * @param mixed         $data
+     * @param string        $queue
      *
      * @return mixed
      */
@@ -82,7 +94,7 @@ class MnsQueue extends Queue implements QueueContract
     /**
      * Pop the next job off of the queue.
      *
-     * @param  string $queue
+     * @param string $queue
      *
      * @return \Illuminate\Queue\Jobs\Job|null
      */
@@ -104,6 +116,6 @@ class MnsQueue extends Queue implements QueueContract
 
     protected function resolveJob($job)
     {
-        return new Jobs\Mnsjob($this->container, $job, $this->client);
+        return new Jobs\AliyunMNSJob($this->container, $job, $this->client);
     }
 }
