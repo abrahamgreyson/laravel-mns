@@ -1,6 +1,6 @@
 <?php namespace Qufenqi\Queue;
 
-use AliyunMNS\Client as MnsClient;
+use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Requests\SendMessageRequest;
 use Illuminate\Queue\Queue;
 use Illuminate\Contracts\Queue\Queue as QueueContract;
@@ -9,24 +9,20 @@ use Qufenqi\Queue\Jobs\AliyunMNSJob;
 class AliyunMNSQueue extends Queue implements QueueContract
 {
     /**
-     * Aliyun MNS Client instance.
-     *
-     * @var MnsClient
-     * @see https://help.aliyun.com/document_detail/mns/sdk/php-sdk.html
+     * @var MnsAdapter
      */
     private $mns;
 
     /**
-     * Default queue name.
+     * Custom callable to handle jobs.
      *
-     * @var string
+     * @var callable
      */
-    private $queue;
+    protected $jobCreator;
 
-    public function __construct(MnsClient $mns, $default)
+    public function __construct(MnsAdapter $mns)
     {
         $this->mns = $mns;
-        $this->queue = $default;
     }
 
     /**
@@ -57,10 +53,10 @@ class AliyunMNSQueue extends Queue implements QueueContract
     public function pushRaw($payload, $queue = null, array $options = [])
     {
         $message = new SendMessageRequest($payload);
-        $queue = $this->setQueue($this->getQueue($queue));
-        $response = $queue->sendMessage($message);
 
-        return $response->get('MessageId');
+        $response = $this->mns->setQueue($queue)->sendMessage($message);
+
+        return $response->getMessageId();
     }
 
     /**
@@ -77,10 +73,10 @@ class AliyunMNSQueue extends Queue implements QueueContract
     {
         $seconds = $this->getSeconds($delay);
         $payload = $this->createPayload($job, $data);
-        $queue = $this->setQueue($this->getQueue($queue));
-        $response = $queue->sendMessage($payload, $seconds);
+        $message = new SendMessageRequest($payload, $seconds);
+        $response = $this->mns->setQueue($queue)->sendMessage($message);
 
-        return $response->get('MessageId');
+        return $response->getMessageId();
     }
 
     /**
@@ -92,37 +88,18 @@ class AliyunMNSQueue extends Queue implements QueueContract
      */
     public function pop($queue = null)
     {
-        $queue = $this->setQueue($this->getQueue($queue));
-        $response = $queue->receiveMessage();
-
-        if (count($response['Messages'] > 0)) {
+        try {
+            $response = $this->mns->setQueue($queue)->receiveMessage();
+        } catch (MnsException $e) {
+            $response = null;
+        }
+        if ($response) {
             if ($this->jobCreator) {
-                return call_user_func($this->jobCreator, $this->container, $this->getQueue($queue), $response);
+                return call_user_func($this->jobCreator, $this->container, $queue, $response);
             } else {
-                return new AliyunMNSJob($this->container, $this->sqs, $queue, $response['Messages'][0]);
+                return new AliyunMNSJob($this->container, $this->mns, $queue, $response);
             }
         }
-        $job = $this->client->consume();
-        if (!is_null($job)) {
-            return $this->resolveJob($job);
-        }
-    }
-
-    public function getQueue($queue = null)
-    {
-        return $queue ?: $this->queue;
-    }
-
-    /**
-     * @param $queue
-     *
-     * @return \AliyunMNS\Queue
-     */
-    protected function setQueue($queue)
-    {
-        $queue = $this->mns->getQueueRef($queue);
-
-        return $queue;
     }
 
     protected function resolveJob($job)

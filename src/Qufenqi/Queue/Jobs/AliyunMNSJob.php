@@ -1,5 +1,6 @@
 <?php namespace Qufenqi\Queue\Jobs;
 
+use AliyunMNS\Client as MnsClient;
 use Closure;
 use Illuminate\Container\Container;
 use Illuminate\Queue\Jobs\Job;
@@ -21,22 +22,26 @@ class AliyunMNSJob extends Job implements JobContract
      */
     protected $data;
 
-    private   $client;
+    /**
+     * @var
+     */
+    private $mns;
 
     /**
      * Create a new job instance.
      *
      * @param  \Illuminate\Container\Container $container
+     * @param  MnsClient                       $mns
+     * @param   string                         $queue
      * @param  string                          $job
-     * @param null                             $client
      *
-     * @internal param object $receiptHandle
      */
-    public function __construct(Container $container, $job, $client = null)
+    public function __construct(Container $container, $mns, $queue, $job)
     {
-        $this->job = $job;
         $this->container = $container;
-        $this->client = $client;
+        $this->mns = $mns;
+        $this->queue = $queue;
+        $this->job = $job;
     }
 
     /**
@@ -46,7 +51,13 @@ class AliyunMNSJob extends Job implements JobContract
      */
     public function fire()
     {
-        $this->resolveAndFire(json_decode($this->getRawBody(), true));
+        $body = json_decode($this->getRawBody(), true);
+        if (!is_array($body)) {
+            throw new \InvalidArgumentException(
+                "Seems it's not a Laravel enqueued job. [$body]"
+            );
+        }
+        $this->resolveAndFire($body);
     }
 
     /**
@@ -56,7 +67,7 @@ class AliyunMNSJob extends Job implements JobContract
      */
     public function getRawBody()
     {
-        return $this->job;
+        return $this->job->getMessageBody();
     }
 
     /**
@@ -67,7 +78,7 @@ class AliyunMNSJob extends Job implements JobContract
     public function delete()
     {
         parent::delete();
-        $this->client->delete();
+        //$this->mns->delete();
     }
 
     /**

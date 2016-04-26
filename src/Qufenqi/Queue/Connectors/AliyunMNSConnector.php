@@ -1,9 +1,10 @@
 <?php namespace Qufenqi\Queue\Connectors;
 
-use AliyunMNS\Client as MnsClient;
 use Config;
+use AliyunMNS\Client as MnsClient;
 use Qufenqi\Queue\AliyunMNSQueue;
 use Illuminate\Queue\Connectors\ConnectorInterface;
+use Qufenqi\Queue\MnsAdapter;
 
 class AliyunMNSConnector implements ConnectorInterface
 {
@@ -18,8 +19,10 @@ class AliyunMNSConnector implements ConnectorInterface
     {
         $config = Config::get('queue.connections.mns');
         return new AliyunMNSQueue(
-            new MnsClient($config['endpoint'], $config['key'], $config['secret']),
-            $config['queue']
+            new MnsAdapter(
+                new MnsClient($config['endpoint'], $config['key'], $config['secret']),
+                $config['queue']
+            )
         );
     }
 }
