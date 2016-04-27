@@ -13,6 +13,10 @@
             "email": "82011220@qq.com"
         }
     ],
+    "support": {
+        "issues": "https://github.com/abrahamgreyson/laravel-mns/issues",
+        "source": "https://github.com/abrahamgreyson/laravel-mns"
+    },
     "require": {
         "laravel/framework": ">=5.1"
     },
