@@ -9,11 +9,15 @@
  > 阿里云 MNS SDK 不支持 Composer，直接将其涵盖在版本库中，并将其注册到了 `AliyunMNS` 命名空间下。
 
 
-## 使用步骤
+## 安装使用
 
-###### 1. composer require abe/laravel-mns
+通过 Composer 安装：
 
-###### 2. 修改 config/queue.php，`connections` 下新增 `mns` 配置：
+```shell
+$ composer require abe/laravel-mns
+```
+
+之后在 config/queue.php 中增加 `mns` 配置：
 
 ```php
 'connections' => [
@@ -36,7 +40,7 @@
 ],
 ```
 
-###### 3. 在你常用的 ServiceProvider 中扩展队列驱动：
+并且在你常用的 ServiceProvider 中注册队列驱动：
 
 ```php
 Queue::extend('mns', function()
@@ -45,7 +49,7 @@ Queue::extend('mns', function()
 });
 ```
 
-###### 4. 正常使用Laravel Queue 即可:
+正常使用 Laravel Queue 即可:
 
 [https://laravel.com/docs/5.2/queues](https://laravel.com/docs/5.2/queues)
 
