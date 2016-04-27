@@ -10,13 +10,12 @@
  * @license: MIT
  */
 
-namespace Qufenqi\Queue;
+namespace LaravelMns\Queue;
 
 use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Requests\SendMessageRequest;
 use Illuminate\Contracts\Queue\Queue as QueueContract;
 use Illuminate\Queue\Queue;
-use Qufenqi\Queue\Jobs\AliyunMNSJob;
 
 class MnsQueue extends Queue implements QueueContract
 {
@@ -65,7 +64,6 @@ class MnsQueue extends Queue implements QueueContract
     public function pushRaw($payload, $queue = null, array $options = [])
     {
         $message = new SendMessageRequest($payload);
-
         $response = $this->mns->setQueue($queue)->sendMessage($message);
 
         return $response->getMessageId();
@@ -109,13 +107,17 @@ class MnsQueue extends Queue implements QueueContract
             if ($this->jobCreator) {
                 return call_user_func($this->jobCreator, $this->container, $queue, $response);
             } else {
-                return new AliyunMNSJob($this->container, $this->mns, $queue, $response);
+                return new Jobs\MnsJob($this->container, $this->mns, $queue, $response);
             }
         }
+        return null;
     }
+    
+    
 
     protected function resolveJob($job)
     {
-        return new Jobs\AliyunMNSJob($this->container, $job, $this->client);
+        dd($job);
+        return new Jobs\MnsJob($this->container, $job, $this->client);
     }
 }

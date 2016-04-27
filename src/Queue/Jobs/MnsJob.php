@@ -10,12 +10,12 @@
  * @license: MIT
  */
 
-namespace Qufenqi\Queue\Jobs;
+namespace LaravelMns\Queue\Jobs;
 
-use AliyunMNS\Client as MnsClient;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Queue\Job as JobContract;
 use Illuminate\Queue\Jobs\Job;
+use LaravelMns\Queue\MnsAdapter;
 
 class MnsJob extends Job implements JobContract
 {
@@ -34,7 +34,7 @@ class MnsJob extends Job implements JobContract
     protected $data;
 
     /**
-     * @var
+     * @var \LaravelMns\Queue\MnsAdapter
      */
     private $mns;
 
@@ -42,7 +42,7 @@ class MnsJob extends Job implements JobContract
      * Create a new job instance.
      *
      * @param \Illuminate\Container\Container $container
-     * @param MnsClient                       $mns
+     * @param \LaravelMns\Queue\MnsAdapter    $mns
      * @param string                          $queue
      * @param string                          $job
      */

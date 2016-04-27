@@ -10,13 +10,13 @@
  * @license: MIT
  */
 
-namespace Qufenqi\Queue\Connectors;
+namespace LaravelMns\Queue\Connectors;
 
 use AliyunMNS\Client as MnsClient;
 use Config;
 use Illuminate\Queue\Connectors\ConnectorInterface;
-use Qufenqi\Queue\MnsAdapter;
-use Qufenqi\Queue\MnsQueue;
+use LaravelMns\Queue\MnsAdapter;
+use LaravelMns\Queue\MnsQueue;
 
 /**
  * Class MnsConnector.
@@ -28,7 +28,7 @@ class MnsConnector implements ConnectorInterface
      *
      * @param array $config
      *
-     * @return \Illuminate\Queue\QueueInterface
+     * @return \Illuminate\Contracts\Queue\Queue
      */
     public function connect(array $config)
     {

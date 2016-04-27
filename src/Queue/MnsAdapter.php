@@ -10,7 +10,7 @@
  * @license: MIT
  */
 
-namespace Qufenqi\Queue;
+namespace LaravelMns\Queue;
 
 use AliyunMNS\Client as MnsClient;
 
