@@ -11,9 +11,9 @@
 
 ## 使用步骤
 
-1. composer require abe/laravel-mns
+###### 1. composer require abe/laravel-mns
 
-2. 修改 config/queue.php， `connections` 下新增 `mns` 配置：
+###### 2. 修改 config/queue.php，`connections` 下新增 `mns` 配置：
 
 ```php
 'connections' => [
@@ -36,7 +36,7 @@
 ],
 ```
 
-3. 在你常用的 ServiceProvider 中扩展队列驱动：
+###### 3. 在你常用的 ServiceProvider 中扩展队列驱动：
 
 ```php
 Queue::extend('mns', function()
@@ -45,11 +45,13 @@ Queue::extend('mns', function()
 });
 ```
 
-4. 正常使用Laravel Queue 即可:
-	[https://laravel.com/docs/5.2/queues](https://laravel.com/docs/5.2/queues)
+###### 4. 正常使用Laravel Queue 即可:
+
+[https://laravel.com/docs/5.2/queues](https://laravel.com/docs/5.2/queues)
 
 ## 贡献
-欢迎任何代码修复和改善，请 Fork 后新建分支，修复完成后用该分支合并我，谢谢！
+
+欢迎任何代码修复和完善，请 Fork 后新建分支，完善后用该分支合并我，谢谢！
 
 ## 许可
 
