@@ -3,11 +3,13 @@
 /*
  * Laravel-Mns -- 阿里云消息队列（MNS）的 Laravel 适配。
  *
+ * This file is part of the abe/laravel-mns.
+ *
  * (c) Abraham Greyson <82011220@qq.com>
+ * @link: https://github.com/abrahamgreyson/laravel-mns
  *
- * @link: https://github.com/AbrahamGreyson/laravel-mns
- *
- * @license: MIT
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace LaravelMns\Queue;
@@ -44,6 +46,7 @@ class MnsAdapter
 {
     /**
      * @var string 适配的阿里云消息服务 SDK 版本，仅用作记录。
+     *
      * @see https://help.aliyun.com/document_detail/mns/sdk/php-sdk.html
      */
     const ADAPTER_TO_ALIYUN_MNS_SDK_VERSION = '1.3.0@2016-02-25';
@@ -57,13 +60,13 @@ class MnsAdapter
      * @var \AliyunMNS\Queue
      */
     private $queue;
-    
+
     public function __construct(MnsClient $client, $queueName)
     {
         $this->client = $client;
         $this->setQueue($queueName);
     }
-    
+
     /**
      * 转化 \AliyunMNS\Client 对象，
      * 可以通过本对象直接访问（而无需通过 \AliyunMNS\Client 对象构建）。
@@ -77,7 +80,7 @@ class MnsAdapter
     {
         return call_user_func_array([$this->queue, $method], $parameters);
     }
-    
+
     /**
      * 将适配队列设定为特定队列。
      *
@@ -87,8 +90,10 @@ class MnsAdapter
      */
     public function setQueue($queue)
     {
-        $this->queue = $this->client->getQueueRef($queue);
-        
+        if (null !== $queue) {
+            $this->queue = $this->client->getQueueRef($queue);
+        }
+
         return $this;
     }
 }

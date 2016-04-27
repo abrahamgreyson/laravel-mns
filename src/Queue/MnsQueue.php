@@ -3,11 +3,13 @@
 /*
  * Laravel-Mns -- 阿里云消息队列（MNS）的 Laravel 适配。
  *
+ * This file is part of the abe/laravel-mns.
+ *
  * (c) Abraham Greyson <82011220@qq.com>
+ * @link: https://github.com/abrahamgreyson/laravel-mns
  *
- * @link: https://github.com/AbrahamGreyson/laravel-mns
- *
- * @license: MIT
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace LaravelMns\Queue;
@@ -107,17 +109,10 @@ class MnsQueue extends Queue implements QueueContract
             if ($this->jobCreator) {
                 return call_user_func($this->jobCreator, $this->container, $queue, $response);
             } else {
-                return new Jobs\MnsJob($this->container, $this->mns, $queue, $response);
+                return new Jobs\MnsJob($this->container, $this->mns, $queue, $response->getMessageBody());
             }
         }
-        return null;
-    }
-    
-    
 
-    protected function resolveJob($job)
-    {
-        dd($job);
-        return new Jobs\MnsJob($this->container, $job, $this->client);
+        return;
     }
 }
