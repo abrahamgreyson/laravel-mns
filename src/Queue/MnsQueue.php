@@ -105,11 +105,12 @@ class MnsQueue extends Queue implements QueueContract
         } catch (MnsException $e) {
             $response = null;
         }
+
         if ($response) {
             if ($this->jobCreator) {
                 return call_user_func($this->jobCreator, $this->container, $queue, $response);
             } else {
-                return new Jobs\MnsJob($this->container, $this->mns, $queue, $response->getMessageBody());
+                return new Jobs\MnsJob($this->container, $this->mns, $queue, $response);
             }
         }
 

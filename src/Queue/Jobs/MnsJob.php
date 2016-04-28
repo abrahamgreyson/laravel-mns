@@ -14,9 +14,11 @@
 
 namespace LaravelMns\Queue\Jobs;
 
+use AliyunMNS\Responses\ReceiveMessageResponse;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Queue\Job as JobContract;
 use Illuminate\Queue\Jobs\Job;
+use LaravelMns\Queue\MnsAdapter;
 
 class MnsJob extends Job implements JobContract
 {
@@ -42,13 +44,17 @@ class MnsJob extends Job implements JobContract
     /**
      * Create a new job instance.
      *
-     * @param \Illuminate\Container\Container $container
-     * @param \LaravelMns\Queue\MnsAdapter    $mns
-     * @param string                          $queue
-     * @param string                          $job
+     * @param \Illuminate\Container\Container             $container
+     * @param \LaravelMns\Queue\MnsAdapter                $mns
+     * @param string                                      $queue
+     * @param \AliyunMNS\Responses\ReceiveMessageResponse $job
      */
-    public function __construct(Container $container, $mns, $queue, $job)
-    {
+    public function __construct(
+        Container $container,
+        MnsAdapter $mns,
+        $queue,
+        ReceiveMessageResponse $job
+    ) {
         $this->container = $container;
         $this->mns = $mns;
         $this->queue = $queue;
@@ -63,7 +69,8 @@ class MnsJob extends Job implements JobContract
         $body = json_decode($this->getRawBody(), true);
         if (!is_array($body)) {
             throw new \InvalidArgumentException(
-                "Seems it's not a Laravel enqueued job. [$body]"
+                "Seems it's not a Laravel enqueued job. \r\n
+                [$body]"
             );
         }
         $this->resolveAndFire($body);
@@ -76,7 +83,7 @@ class MnsJob extends Job implements JobContract
      */
     public function getRawBody()
     {
-        return $this->job;
+        return $this->job->getMessageBody();
     }
 
     /**
@@ -85,7 +92,7 @@ class MnsJob extends Job implements JobContract
     public function delete()
     {
         parent::delete();
-        //$this->mns->delete();
+        $this->mns->deleteMessage($this->job->getReceiptHandle());
     }
 
     /**
@@ -96,6 +103,14 @@ class MnsJob extends Job implements JobContract
     public function release($delay = 0)
     {
         parent::release($delay);
+        $this->mns->changeMessageVisibility(
+            $this->job->getReceiptHandle(),
+
+            // 默认情况下 Laravel 将以 delay 0 来更改可见性，其预期的是使用队列服务默认的
+            // 下次可消费时间，但 Aliyun MNS PHP SDK 的接口要求这个值必须大于 0，
+            // 指从现在起，多久后消息变为可消费。
+            $this->fromNowToNextVisibleTime($this->job->getNextVisibleTime())
+        );
     }
 
     /**
@@ -105,5 +120,21 @@ class MnsJob extends Job implements JobContract
      */
     public function attempts()
     {
+        return (int) $this->job->getDequeueCount();
+    }
+
+    /**
+     * 从现在起到消息变为可消费的秒数。
+     *
+     * @param int $nextVisibleTime 下次可消费时的微妙时间戳。
+     *
+     * @return int
+     */
+    private function fromNowToNextVisibleTime($nextVisibleTime)
+    {
+        $nowInMicrotime = 1000 * microtime(true);
+        $fromNowToNextVisibleTime = $nextVisibleTime - $nowInMicrotime;
+
+        return (int)($fromNowToNextVisibleTime / 1000);
     }
 }
