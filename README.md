@@ -49,7 +49,7 @@ Queue::extend('mns', function()
 });
 ```
 
-正常使用 Laravel Queue 即可:
+正常使用 Laravel Queue 即可：
 
 [https://laravel.com/docs/5.2/queues](https://laravel.com/docs/5.2/queues)
 
