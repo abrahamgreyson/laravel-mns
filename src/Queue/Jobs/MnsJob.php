@@ -102,14 +102,17 @@ class MnsJob extends Job implements JobContract
      */
     public function release($delay = 0)
     {
+        // 默认情况下 Laravel 将以 delay 0 来更改可见性，其预期的是使用队列服务默认的
+        // 下次可消费时间，但 Aliyun MNS PHP SDK 的接口要求这个值必须大于 0，
+        // 指从现在起，多久后消息变为可消费。
+        $delay = 0 !== $delay
+            ? $delay
+            : $this->fromNowToNextVisibleTime($this->job->getNextVisibleTime());
+
         parent::release($delay);
         $this->mns->changeMessageVisibility(
             $this->job->getReceiptHandle(),
-
-            // 默认情况下 Laravel 将以 delay 0 来更改可见性，其预期的是使用队列服务默认的
-            // 下次可消费时间，但 Aliyun MNS PHP SDK 的接口要求这个值必须大于 0，
-            // 指从现在起，多久后消息变为可消费。
-            $this->fromNowToNextVisibleTime($this->job->getNextVisibleTime())
+            $delay
         );
     }
 
@@ -120,7 +123,7 @@ class MnsJob extends Job implements JobContract
      */
     public function attempts()
     {
-        return (int) $this->job->getDequeueCount();
+        return (int)$this->job->getDequeueCount();
     }
 
     /**

@@ -4,7 +4,7 @@
 
  > 接触 Laravel 时已经是 5.1 版，没有测试这个包是否能在小于 5.1 下工作。
 
- > 自 [aliyun_mns](https://github.com/chefxu/aliyun_mns]) 之上修改而来，鉴于缩进、换行和文件命名等代码风格有所差异，所以没有 PR。
+ > 自 [aliyun_mns](https://github.com/chefxu/aliyun_mns]) 之上修改而来，鉴于缩进、换行和文件命名等代码风格有所差异，无法发 pr。
 
  > 阿里云 MNS SDK 不支持 Composer，直接将其涵盖在版本库中，并将其注册到了 `AliyunMNS` 命名空间下。
 
@@ -53,9 +53,6 @@ Queue::extend('mns', function()
 
 [https://laravel.com/docs/5.2/queues](https://laravel.com/docs/5.2/queues)
 
-## 贡献
-
-欢迎任何代码修复和完善，请 Fork 后新建分支，完善后用该分支合并我，谢谢！
 
 ## 许可
 

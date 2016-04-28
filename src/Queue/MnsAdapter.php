@@ -42,7 +42,7 @@ use AliyunMNS\Client as MnsClient;
  * @method \AliyunMNS\Responses\BatchDeleteMessageResponse batchDeleteMessage(\AliyunMNS\Requests\BatchDeleteMessageRequest $request)
  * @method \AliyunMNS\Responses\MnsPromise batchDeleteMessageAsync(\AliyunMNS\Requests\BatchDeleteMessageRequest $request, \AliyunMNS\AsyncCallback $callback = null)
  */
-class MnsAdapter
+final class MnsAdapter
 {
     /**
      * @var string 适配的阿里云消息服务 SDK 版本，仅用作记录。
@@ -52,11 +52,15 @@ class MnsAdapter
     const ADAPTER_TO_ALIYUN_MNS_SDK_VERSION = '1.3.0@2016-02-25';
 
     /**
+     * Aliyun MNS SDK Client.
+     *
      * @var MnsClient
      */
     private $client;
 
     /**
+     * Aliyun MNS SDK Queue.
+     *
      * @var \AliyunMNS\Queue
      */
     private $queue;
@@ -82,7 +86,7 @@ class MnsAdapter
     }
 
     /**
-     * 将适配队列设定为特定队列。
+     * 将队列设定为特定队列。
      *
      * @param $queue
      *
