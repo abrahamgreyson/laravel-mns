@@ -12,13 +12,13 @@
  * with this source code in the file LICENSE.
  */
 
-namespace LaravelMns\Queue\Jobs;
+namespace LaravelMns\Jobs;
 
 use AliyunMNS\Responses\ReceiveMessageResponse;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Queue\Job as JobContract;
 use Illuminate\Queue\Jobs\Job;
-use LaravelMns\Queue\MnsAdapter;
+use LaravelMns\MnsAdapter;
 
 class MnsJob extends Job implements JobContract
 {
@@ -37,7 +37,7 @@ class MnsJob extends Job implements JobContract
     protected $data;
 
     /**
-     * @var \LaravelMns\Queue\MnsAdapter
+     * @var \LaravelMns\MnsAdapter
      */
     private $mns;
 
@@ -45,7 +45,7 @@ class MnsJob extends Job implements JobContract
      * Create a new job instance.
      *
      * @param \Illuminate\Container\Container             $container
-     * @param \LaravelMns\Queue\MnsAdapter                $mns
+     * @param \LaravelMns\MnsAdapter                $mns
      * @param string                                      $queue
      * @param \AliyunMNS\Responses\ReceiveMessageResponse $job
      */
@@ -92,7 +92,8 @@ class MnsJob extends Job implements JobContract
     public function delete()
     {
         parent::delete();
-        $this->mns->deleteMessage($this->job->getReceiptHandle());
+        $receiptHandle = $this->job->getReceiptHandle();
+        $this->mns->deleteMessage($receiptHandle);
     }
 
     /**
@@ -108,7 +109,6 @@ class MnsJob extends Job implements JobContract
         $delay = 0 !== $delay
             ? $delay
             : $this->fromNowToNextVisibleTime($this->job->getNextVisibleTime());
-
         parent::release($delay);
         $this->mns->changeMessageVisibility(
             $this->job->getReceiptHandle(),
@@ -135,9 +135,19 @@ class MnsJob extends Job implements JobContract
      */
     private function fromNowToNextVisibleTime($nextVisibleTime)
     {
-        $nowInMicrotime = 1000 * microtime(true);
-        $fromNowToNextVisibleTime = $nextVisibleTime - $nowInMicrotime;
+        $nowInMilliSeconds = 1000 * microtime(true);
+        $fromNowToNextVisibleTime = $nextVisibleTime - $nowInMilliSeconds;
 
         return (int)($fromNowToNextVisibleTime / 1000);
+    }
+
+    /**
+     * Get the IoC container instance.
+     *
+     * @return \Illuminate\Container\Container
+     */
+    public function getContainer()
+    {
+        return $this->container;
     }
 }

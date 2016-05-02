@@ -12,16 +12,18 @@
  * with this source code in the file LICENSE.
  */
 
-namespace LaravelMns\Queue\Connectors;
+namespace LaravelMns\Connectors;
 
 use AliyunMNS\Client as MnsClient;
 use Config;
 use Illuminate\Queue\Connectors\ConnectorInterface;
-use LaravelMns\Queue\MnsAdapter;
-use LaravelMns\Queue\MnsQueue;
+use LaravelMns\MnsAdapter;
+use LaravelMns\MnsQueue;
 
 /**
  * Class MnsConnector.
+ *
+ * @codeCoverageIgnore
  */
 class MnsConnector implements ConnectorInterface
 {

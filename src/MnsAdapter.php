@@ -12,7 +12,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace LaravelMns\Queue;
+namespace LaravelMns;
 
 use AliyunMNS\Client as MnsClient;
 
@@ -42,7 +42,7 @@ use AliyunMNS\Client as MnsClient;
  * @method \AliyunMNS\Responses\BatchDeleteMessageResponse batchDeleteMessage(\AliyunMNS\Requests\BatchDeleteMessageRequest $request)
  * @method \AliyunMNS\Responses\MnsPromise batchDeleteMessageAsync(\AliyunMNS\Requests\BatchDeleteMessageRequest $request, \AliyunMNS\AsyncCallback $callback = null)
  */
-final class MnsAdapter
+class MnsAdapter
 {
     /**
      * @var string 适配的阿里云消息服务 SDK 版本，仅用作记录。

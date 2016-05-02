@@ -12,7 +12,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace LaravelMns\Queue;
+namespace LaravelMns;
 
 use AliyunMNS\Exception\MessageNotExistException;
 use AliyunMNS\Requests\SendMessageRequest;
@@ -135,8 +135,22 @@ class MnsQueue extends Queue implements QueueContract
      *
      * @return string
      */
-    private function getDefaultIfNull($wanted)
+    public function getDefaultIfNull($wanted)
     {
         return $wanted ? $wanted : $this->default;
+    }
+
+    /**
+     * 设置使用特定的回调函数处理 job。
+     *
+     * @param callable $callback
+     *
+     * @return $this
+     */
+    public function createJobsUsing(callable $callback)
+    {
+        $this->jobCreator = $callback;
+
+        return $this;
     }
 }
