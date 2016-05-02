@@ -1,0 +1,9 @@
+preset: PSR2
+
+finder:
+  exclude:
+    - "tests"
+    - "lib"
+
+enabled:
+  - simplified_null_return

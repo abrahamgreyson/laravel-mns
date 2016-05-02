@@ -42,7 +42,7 @@ class MnsJobTest extends AbstractTestCase
         $this->mockedResponse = m::mock(ReceiveMessageResponse::class);
         $this->mockedAdapter = m::mock(MnsAdapter::class);
     }
-    
+
     public function testFireProperlyCallJobHandler()
     {
         $job = $this->getJob();
@@ -57,7 +57,7 @@ class MnsJobTest extends AbstractTestCase
                 ->with($job, ['data']);
         $job->fire();
     }
-    
+
     public function testFireProperlyThrowWhenJobIsNotInsertByLaravel()
     {
         $this->mockedPayload = 'wrong payload.';
@@ -80,7 +80,7 @@ class MnsJobTest extends AbstractTestCase
         $job->delete($this->receiptHandle);
         $this->assertTrue($job->isDeleted());
     }
-    
+
     public function testReleaseProperlySetVisibleTimeToMns()
     {
         $job = $this->getJob();

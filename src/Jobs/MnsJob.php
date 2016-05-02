@@ -45,7 +45,7 @@ class MnsJob extends Job implements JobContract
      * Create a new job instance.
      *
      * @param \Illuminate\Container\Container             $container
-     * @param \LaravelMns\MnsAdapter                $mns
+     * @param \LaravelMns\MnsAdapter                      $mns
      * @param string                                      $queue
      * @param \AliyunMNS\Responses\ReceiveMessageResponse $job
      */
@@ -123,7 +123,7 @@ class MnsJob extends Job implements JobContract
      */
     public function attempts()
     {
-        return (int)$this->job->getDequeueCount();
+        return (int) $this->job->getDequeueCount();
     }
 
     /**
@@ -138,7 +138,7 @@ class MnsJob extends Job implements JobContract
         $nowInMilliSeconds = 1000 * microtime(true);
         $fromNowToNextVisibleTime = $nextVisibleTime - $nowInMilliSeconds;
 
-        return (int)($fromNowToNextVisibleTime / 1000);
+        return (int) ($fromNowToNextVisibleTime / 1000);
     }
 
     /**

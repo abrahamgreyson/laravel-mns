@@ -25,28 +25,28 @@ class MnsQueue extends Queue implements QueueContract
      * @var MnsAdapter
      */
     protected $mns;
-    
+
     /**
      * Custom callable to handle jobs.
      *
      * @var callable
      */
     protected $jobCreator;
-    
+
     /**
      * The name of default queue.
      *
      * @var string
      */
     protected $default;
-    
+
     public function __construct(MnsAdapter $mns)
     {
         $this->mns = $mns;
-        
+
         $this->default = $this->mns->getQueueName();
     }
-    
+
     /**
      * Push a new job onto the queue.
      *
@@ -59,10 +59,10 @@ class MnsQueue extends Queue implements QueueContract
     public function push($job, $data = '', $queue = null)
     {
         $payload = $this->createPayload($job, $data);
-        
+
         return $this->pushRaw($payload, $queue);
     }
-    
+
     /**
      * Push a raw payload onto the queue.
      *
@@ -76,10 +76,10 @@ class MnsQueue extends Queue implements QueueContract
     {
         $message = new SendMessageRequest($payload);
         $response = $this->mns->setQueue($queue)->sendMessage($message);
-        
+
         return $response->getMessageId();
     }
-    
+
     /**
      * Push a new job onto the queue after a delay.
      *
@@ -96,10 +96,10 @@ class MnsQueue extends Queue implements QueueContract
         $payload = $this->createPayload($job, $data);
         $message = new SendMessageRequest($payload, $seconds);
         $response = $this->mns->setQueue($queue)->sendMessage($message);
-        
+
         return $response->getMessageId();
     }
-    
+
     /**
      * Pop the next job off of the queue.
      *
@@ -110,13 +110,13 @@ class MnsQueue extends Queue implements QueueContract
     public function pop($queue = null)
     {
         $queue = $this->getDefaultIfNull($queue);
-        
+
         try {
             $response = $this->mns->setQueue($queue)->receiveMessage();
         } catch (MessageNotExistException $e) {
             $response = null;
         }
-        
+
         if ($response) {
             if ($this->jobCreator) {
                 return call_user_func($this->jobCreator, $this->container, $queue, $response);
@@ -124,10 +124,10 @@ class MnsQueue extends Queue implements QueueContract
                 return new Jobs\MnsJob($this->container, $this->mns, $queue, $response);
             }
         }
-        
+
         return;
     }
-    
+
     /**
      * 获取默认队列名（如果当前队列名为 null）。
      *

@@ -31,6 +31,8 @@ $fixers = [
     'unary_operators_spaces',
     'ordered_use',
     'short_array_syntax',
+    'whitespacy_lines',
+    'spaces_cast'
 ];
 
 Symfony\CS\Fixer\Contrib\HeaderCommentFixer::setHeader($header);

@@ -17,3 +17,5 @@
 # IDE helper
 _ide_helper.php
 .phpstorm.meta.php
+
+.composer.lock

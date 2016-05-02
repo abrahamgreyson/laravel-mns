@@ -1,0 +1,50 @@
+# see http://about.travis-ci.org/docs/user/languages/php/ for more hints.
+language: php
+
+# list any PHP version you want to test against.
+php:
+  # using major version aliases.
+  # after php 5.5, aliased to a recent version.
+  - 5.5
+  - 5.6
+  - 7.0
+  - hhvm
+
+env:
+  global:
+    - COMPOSER_DISCARD_CHANGES=true
+  matrix:
+    - laravel_version="5.1.*"  composer_prefer="--prefer-lowest"
+    - laravel_version="5.1.*"  composer_prefer="--prefer-stable"
+    - laravel_version="5.1.*"  composer_prefer=""
+    - laravel_version="5.2.*"  composer_prefer="--prefer-lowest"
+    - laravel_version="5.2.*"  composer_prefer="--prefer-stable"
+    - laravel_version="5.2.*"  composer_prefer=""
+    - laravel_version="5.0.*"  composer_prefer="--prefer-lowest"
+    - laravel_version="5.0.*"  composer_prefer="--prefer-stable"
+    - laravel_version="5.0.*"  composer_prefer=""
+
+matrix:
+  global:
+  # failures not break entire test suite.
+  allow_failures:
+    - php: nightly
+    - php: hhvm
+  fast_finish: true
+
+install:
+  # speed up package installation process use parallel.
+  - composer global require hirak/prestissimo
+  - composer require laravel/framework:$laravel_version
+  - composer update --prefer-source --no-interaction $composer_prefer
+
+before_script:
+  # disable xdebug since it override var_dump() function we rely on to parse object.
+  - if [ $(phpenv version-name) != "hhvm" ]; then phpenv config-rm xdebug.ini; fi
+
+script:
+  - ./vendor/bin/phpunit
+
+notifications:
+  email:
+    on_success: never

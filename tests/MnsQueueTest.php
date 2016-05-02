@@ -32,10 +32,10 @@ class MnsQueueTest extends AbstractTestCase
     public function setUp()
     {
         parent::setUp();
-        
+
         $this->default = 'default';
         $this->delay = 100;
-        
+
         $this->mockedJob = 'job';
         $this->mockedData = ['data'];
         $this->mockedPayload = json_encode([
@@ -127,7 +127,7 @@ class MnsQueueTest extends AbstractTestCase
         $id = $mnsQueue->later($now->addSeconds(3600), $this->mockedJob, $this->mockedData, $this->default);
         $this->assertEquals(123, $id);
     }
-    
+
     public function testPopProperlyPopOffFromJobMns()
     {
         $mnsAdapter = new MnsAdapter($this->mnsClient, $this->default);
