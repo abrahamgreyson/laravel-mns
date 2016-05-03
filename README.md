@@ -10,7 +10,7 @@
 
  > ~~没测试这个包是否能在小于 5.1 下工作。~~  已测试支持 >= 5.0。
 
- > 自 [aliyun_mns](https://github.com/chefxu/aliyun_mns) 之上修改而来，鉴于缩进、换行和文件命名等代码风格有所差异，无法发 pr。
+ > 自 [chefxu/aliyun_mns](https://github.com/chefxu/aliyun_mns) 之上修改而来，鉴于缩进、换行和文件命名等代码风格有所差异，无法发 pr。
 
  > 阿里云 MNS SDK 不支持 Composer，直接将其包含在版本库中，并注册到 `AliyunMNS` 命名空间下。
 
@@ -40,7 +40,7 @@ $ composer require abe/laravel-mns
         'key'      => env('MNS_ACCESS_KEY', 'access-key'),
         'secret'   => env('MNS_SECRET_KEY', 'secret-key'),
         // 外网连接必须启用 https。
-        'endpoint' => 'your-endpoint,
+        'endpoint' => 'your-endpoint',
         'queue'    => env('MNS_DEFAULT_QUEUE', 'default-queue-name'),
     ],
 ],
