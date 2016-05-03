@@ -1,12 +1,18 @@
 # Laravel-MNS
 
+[![StyleCI PSR2](https://styleci.io/repos/57226401/shield)](https://styleci.io/repos/57226401)
+[![Build Status](https://travis-ci.org/abrahamgreyson/laravel-mns.svg?branch=master)](https://travis-ci.org/abrahamgreyson/laravel-mns)
+[![Code Coverage](https://scrutinizer-ci.com/g/abrahamgreyson/laravel-mns/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/abrahamgreyson/laravel-mns/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/abe/laravel-mns/v/stable)](https://packagist.org/packages/abe/laravel-mns)
+[![License](https://img.shields.io/badge/license-MIT-000000.svg)](https://packagist.org/packages/abe/laravel-mns)
+
 阿里云消息服务（MNS）的 Laravel 适配，本质上是为 Laravel 的队列增加 MNS 驱动。包含了阿里云 MNS SDK，为了 Laravel 能透明的使用 MNS 而对其作必要的引用。
 
- > 接触 Laravel 时已经是 5.1 版，没有测试这个包是否能在小于 5.1 下工作。
+ > ~~没测试这个包是否能在小于 5.1 下工作。~~  已测试支持 >= 5.0。
 
  > 自 [aliyun_mns](https://github.com/chefxu/aliyun_mns]) 之上修改而来，鉴于缩进、换行和文件命名等代码风格有所差异，无法发 pr。
 
- > 阿里云 MNS SDK 不支持 Composer，直接将其涵盖在版本库中，并将其注册到了 `AliyunMNS` 命名空间下。
+ > 阿里云 MNS SDK 不支持 Composer，直接将其包含在版本库中，并注册到 `AliyunMNS` 命名空间下。
 
 
 ## 安装使用
