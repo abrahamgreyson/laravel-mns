@@ -141,6 +141,20 @@ class MnsQueueTest extends AbstractTestCase
         $mnsQueue->pop($this->default);
     }
 
+    public function testPopProperlyReturnsNullWhenMnsHasNoActivelyMessage()
+    {
+        $mnsAdapter = new MnsAdapter($this->mnsClient, $this->default);
+        $response = m::mock(ReceiveMessageResponse::class);
+        $mnsQueue = m::mock(MnsQueue::class, [$mnsAdapter])->makePartial();
+        $mnsQueue->setContainer(m::mock(\Illuminate\Container\Container::class));
+        $this->queueClient->shouldReceive('receiveMessage')
+                          ->once()
+                          ->withNoArgs()
+                          ->andThrow(new \AliyunMNS\Exception\MessageNotExistException(404, 'No message can get.'));
+        $result = $mnsQueue->pop($this->default);
+        $this->assertNull($result);
+    }
+
     public function testPopProperlyPopOffJobWithCustomCreator()
     {
         $mnsAdapter = new MnsAdapter($this->mnsClient, $this->default);
