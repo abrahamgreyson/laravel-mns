@@ -131,7 +131,7 @@ class MnsQueue extends Queue implements QueueContract
     /**
      * 获取默认队列名（如果当前队列名为 null）。
      *
-     * @param $wanted
+     * @param string|null $wanted
      *
      * @return string
      */
