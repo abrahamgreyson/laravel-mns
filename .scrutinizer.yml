@@ -14,9 +14,10 @@ build:
             version: 5.5.9
 
     tests:
+        before:
+            - command: 'composer require laravel/framework:5.2'
         override:
-            -
-                command: 'phpunit --coverage-clover=some-file'
-                coverage:
-                    file: 'some-file'
-                    format: 'php-clover'
+            - command: 'phpunit --coverage-clover=some-file'
+              coverage:
+                   file: 'some-file'
+                   format: 'php-clover'
