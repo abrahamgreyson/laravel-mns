@@ -63,17 +63,16 @@ class MnsJob extends Job implements JobContract
 
     /**
      * Fire the job.
+     *
+     * @return void
      */
     public function fire()
     {
-        $body = json_decode($this->getRawBody(), true);
-        if (!is_array($body)) {
-            throw new \InvalidArgumentException(
-                "Seems it's not a Laravel enqueued job. \r\n
-                [$body]"
-            );
+        if (method_exists($this, 'resolveAndFire')) {
+            $this->resolveAndFire(json_decode($this->getRawBody(), true));
+            return;
         }
-        $this->resolveAndFire($body);
+        parent::fire();
     }
 
     /**
@@ -106,7 +105,7 @@ class MnsJob extends Job implements JobContract
         // 默认情况下 Laravel 将以 delay 0 来更改可见性，其预期的是使用队列服务默认的
         // 下次可消费时间，但 Aliyun MNS PHP SDK 的接口要求这个值必须大于 0，
         // 指从现在起，多久后消息变为可消费。
-        $delay = 0 !== $delay
+        $delay = $delay > 0
             ? $delay
             : $this->fromNowToNextVisibleTime($this->job->getNextVisibleTime());
         parent::release($delay);

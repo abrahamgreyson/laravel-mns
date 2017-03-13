@@ -125,7 +125,7 @@ class MnsQueue extends Queue implements QueueContract
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -152,5 +152,16 @@ class MnsQueue extends Queue implements QueueContract
         $this->jobCreator = $callback;
 
         return $this;
+    }
+
+    /**
+     * Get the size of the queue.
+     *
+     * @param  string $queue
+     * @return int
+     */
+    public function size($queue = null)
+    {
+        throw new NotImplementedException('size方法没有实现');
     }
 }

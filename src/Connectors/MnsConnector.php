@@ -15,7 +15,6 @@
 namespace LaravelMns\Connectors;
 
 use AliyunMNS\Client as MnsClient;
-use Config;
 use Illuminate\Queue\Connectors\ConnectorInterface;
 use LaravelMns\MnsAdapter;
 use LaravelMns\MnsQueue;
@@ -36,7 +35,7 @@ class MnsConnector implements ConnectorInterface
      */
     public function connect(array $config)
     {
-        $config = Config::get('queue.connections.mns');
+        $config = config('queue.connections.mns');
 
         return new MnsQueue(
             new MnsAdapter(
