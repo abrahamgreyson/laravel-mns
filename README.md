@@ -1,6 +1,4 @@
 # Laravel-MNS
-
-[![StyleCI PSR2](https://styleci.io/repos/57226401/shield)](https://styleci.io/repos/57226401)
 [![Build Status](https://travis-ci.org/abrahamgreyson/laravel-mns.svg?branch=master)](https://travis-ci.org/abrahamgreyson/laravel-mns)
 [![Code Coverage](https://scrutinizer-ci.com/g/abrahamgreyson/laravel-mns/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/abrahamgreyson/laravel-mns/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/abe/laravel-mns/v/stable)](https://packagist.org/packages/abe/laravel-mns)
